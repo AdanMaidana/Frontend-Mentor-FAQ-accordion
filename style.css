@@ -1,0 +1,164 @@
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Work Sans', sans-serif;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('../assets/fonts/WorkSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+
+body,
+html {
+  background-color: #f9eeff;
+  min-height: 100dvh;
+  min-width: 375px;
+}
+
+body {
+  place-content: center;
+  position: relative;
+  padding: 1rem;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  min-width: 375px;
+  width: 100%;
+  height: 25dvh;
+  inset: 0;
+  background-image: url('./assets/images/background-pattern-desktop.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  background-color: #fff;
+  max-width: 370px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: .5rem;
+
+  header {
+    color: hsl(292, 42%, 14%);
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .title {
+    position: relative;
+
+    h2 {
+      max-inline-size: 21ch;
+      color: hsl(292, 42%, 14%);
+    }
+
+    .plus, .minus {
+      position: absolute;
+      inset-inline-end: 0;
+      transition: opacity .3s ease-in-out;
+    }
+
+    .minus {
+      opacity: 0;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ededed;
+    margin: 1rem 0;
+  }
+}
+
+button {
+  margin: 1rem 0;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  transition: color .3s ease;
+
+  div {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 1.10rem;
+      text-align: left;
+      font-weight: 600;
+    }
+  }
+}
+
+button:hover {
+  cursor: pointer;
+  color: #ad28eb;
+}
+
+.content {
+  height: 0;
+  overflow: clip;
+  visibility: hidden;
+  transition: height .3s ease-in-out, visibility .3s ease-in-out, padding .3s ease-in-out;
+  interpolate-size: allow-keywords;
+  color: hsl(292, 16%, 49%);
+  line-height: 1.5;
+  font-size: .96rem;
+}
+
+
+button[aria-expanded="true"]+.content {
+  height: auto;
+  visibility: visible;
+}
+
+button[aria-expanded="true"] .title .plus {
+  opacity: 0;
+}
+
+button[aria-expanded="true"] .title .minus {
+  opacity: 1;
+}
+
+@media (width >= 640px) {
+  body::before {
+    height: 35dvh;
+  }
+  main {
+    max-width: 585px;
+
+    header {
+      column-gap: 1.5rem;
+      font-size: 1.65rem;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .title h2 {
+      max-inline-size: none;
+    }
+  }
+}
