@@ -26,6 +26,7 @@ body {
   place-content: center;
   position: relative;
   padding: 1rem;
+  interpolate-size: allow-keywords;
 }
 
 body::before {
@@ -63,87 +64,88 @@ main {
     }
   }
 
-  .title {
-    position: relative;
+  details {
+    overflow: hidden;
 
-    h2 {
-      max-inline-size: 21ch;
-      color: hsl(292, 42%, 14%);
+    .title {
+      padding: 1rem 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h2 {
+        max-inline-size: 21ch;
+        color: hsl(292, 42%, 14%);
+        font-size: 1.10rem;
+        text-align: left;
+        font-weight: 600;
+        transition: color .3s ease;
+      }
+
+      .plus,
+      .minus {
+        position: absolute;
+        inset-inline-end: 0;
+        transition: opacity .3s ease;
+      }
+
+      .minus {
+        opacity: 0;
+      }
     }
 
-    .plus, .minus {
-      position: absolute;
-      inset-inline-end: 0;
-      transition: opacity .3s ease-in-out;
+    .title:hover {
+      cursor: pointer;
     }
+  }
 
-    .minus {
-      opacity: 0;
-    }
+  details:hover h2 {
+    color: #ad28eb;
+  }
+
+  details::details-content {
+    block-size: 0;
+    transition: block-size .3s ease, content-visibility .3s ease;
+    transition-behavior: allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+  }
+
+  details[open] .title .minus {
+    opacity: 1;
+  }
+
+  details[open] .title .plus {
+    opacity: 0;
+  }
+
+  details[open] .title h2 {
+    color: #ad28eb;
+  }
+
+  details p {
+    color: hsl(292, 16%, 49%);
+    line-height: 1.5;
+    font-size: .96rem;
   }
 
   hr {
     border: 0;
     border-top: 1px solid #ededed;
-    margin: 1rem 0;
+    margin-block: 1rem;
   }
+
+
 }
 
-button {
-  margin: 1rem 0;
-  width: 100%;
-  background: transparent;
-  border: 0;
-  transition: color .3s ease;
-
-  div {
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    h2 {
-      font-size: 1.10rem;
-      text-align: left;
-      font-weight: 600;
-    }
-  }
-}
-
-button:hover {
-  cursor: pointer;
-  color: #ad28eb;
-}
-
-.content {
-  height: 0;
-  overflow: clip;
-  visibility: hidden;
-  transition: height .3s ease-in-out, visibility .3s ease-in-out, padding .3s ease-in-out;
-  interpolate-size: allow-keywords;
-  color: hsl(292, 16%, 49%);
-  line-height: 1.5;
-  font-size: .96rem;
-}
-
-
-button[aria-expanded="true"]+.content {
-  height: auto;
-  visibility: visible;
-}
-
-button[aria-expanded="true"] .title .plus {
-  opacity: 0;
-}
-
-button[aria-expanded="true"] .title .minus {
-  opacity: 1;
-}
-
-@media (width >= 640px) {
+@media (width >=640px) {
   body::before {
     height: 35dvh;
   }
+
   main {
     max-width: 585px;
 
@@ -157,7 +159,7 @@ button[aria-expanded="true"] .title .minus {
       }
     }
 
-    .title h2 {
+    details .title h2 {
       max-inline-size: none;
     }
   }
